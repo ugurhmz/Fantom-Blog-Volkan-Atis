@@ -1,6 +1,6 @@
 from django.conf import settings
 from django.db import models
-
+from django.template.defaultfilters import slugify
 
 
 class Post(models.Model):
@@ -9,12 +9,24 @@ class Post(models.Model):
     publishing_date = models.DateTimeField(auto_now_add=True)
     image = models.ImageField(null=True,blank=True, upload_to='resimler/')
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, default=1)#ForeignKey -> 1'e çok yani, 1 kullanıcı bir sürü yazı ekleyebilir ilişkisi
-
+    slug = models.SlugField(default="slug")
 
 
 
     def __str__(self):
         return self.title
+
+
+    #Benim title'ımı slugum yap onun için save metodu
+    def save(self,*args, **kwargs):
+        self.slug = slugify(self.title)
+        super(Post,self).save(*args,**kwargs)
+
+
+
+
+
+
 
 
 
