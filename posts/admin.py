@@ -1,5 +1,5 @@
 from django.contrib import admin
-from posts.models import Post
+from posts.models import Post, Category
 
 
 @admin.register(Post)
@@ -12,3 +12,8 @@ class AdminPost(admin.ModelAdmin):
 
     class Meta:
         model =Post
+
+
+
+
+admin.site.register(Category)

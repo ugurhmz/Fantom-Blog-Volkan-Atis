@@ -4,13 +4,33 @@ from django.db import models
 from django.template.defaultfilters import slugify
 
 
+class Category(models.Model):
+    title = models.CharField(max_length=250)
+    slug = models.SlugField(editable=False)
+
+
+    def __str__(self):
+        return self.title
+
+
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.title)
+        super(Category,self).save(*args,**kwargs)
+
+
+
+
+
 class Post(models.Model):
     title = models.CharField(max_length=150)
     content = models.TextField()
     publishing_date = models.DateTimeField(auto_now_add=True)
-    image = models.ImageField(null=True,blank=True, upload_to='resimler/',default="resimler/default_img.jpg")
+    image = models.ImageField(null=True,blank=True, upload_to='resimler/',default="resimler/sean-o-KMn4VEeEPR8-unsplash.jpg")
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, default=1)#ForeignKey -> 1'e çok yani, 1 kullanıcı bir sürü yazı ekleyebilir ilişkisi
-    slug = models.SlugField(default="slug")
+    slug = models.SlugField(default="slug", editable=False)
+    category = models.ForeignKey(Category,on_delete=models.CASCADE, default=1)#1 Category'nin ->BİR SÜRÜ POSTU OLABİLİR , category -> one, Post Many
+
+
 
 
 
@@ -26,8 +46,9 @@ class Post(models.Model):
         #gelen resimleri boyutlandırma Pillow
         img = Image.open(self.image.path)
 
-        if img.height > 340 or img.width > 730:
-            new_size = (340,730)
+
+        if img.height > 340 or img.width > 770:
+            new_size = (340,770)
             img.thumbnail(new_size)
             img.save(self.image.path)
 
