@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.views.generic import ListView, TemplateView, DetailView
-from .models import Post
+from .models import Post, Category
 
 #__________________________________ IndexView(ListView)__________________________
 
@@ -12,7 +12,9 @@ class IndexView(ListView):
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super(IndexView,self).get_context_data(**kwargs)
 
+
         return context
+
 
 
 #__________________________________ PostDetail(DetailView)__________________________

@@ -18,6 +18,10 @@ class Category(models.Model):
         super(Category,self).save(*args,**kwargs)
 
 
+    #Post saydırma
+    def post_count(self):
+        return self.posts.all().count() #posts -> related_name="posts" dan geliyor..
+
 
 
 
@@ -28,7 +32,7 @@ class Post(models.Model):
     image = models.ImageField(null=True,blank=True, upload_to='resimler/',default="resimler/sean-o-KMn4VEeEPR8-unsplash.jpg")
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, default=1)#ForeignKey -> 1'e çok yani, 1 kullanıcı bir sürü yazı ekleyebilir ilişkisi
     slug = models.SlugField(default="slug", editable=False)
-    category = models.ForeignKey(Category,on_delete=models.CASCADE, default=1)#1 Category'nin ->BİR SÜRÜ POSTU OLABİLİR , category -> one, Post Many
+    category = models.ForeignKey(Category,on_delete=models.CASCADE, default=1, related_name="posts")#1 Category'nin ->BİR SÜRÜ POSTU OLABİLİR , category -> one, Post Many
 
 
 
