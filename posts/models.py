@@ -47,14 +47,14 @@ class Post(models.Model):
         self.slug = slugify(self.title)
         super(Post,self).save(*args,**kwargs)
 
-        #gelen resimleri boyutlandırma Pillow
-        img = Image.open(self.image.path)
-
-
-        if img.height > 340 or img.width > 770:
-            new_size = (340,770)
-            img.thumbnail(new_size)
-            img.save(self.image.path)
+        #gelen resimleri boyutlandırma Pillow (KALDIRILDI -RGB Den dolayı bozuyor..)
+        # img = Image.open(self.image.path)
+        #
+        #
+        # if img.height > 340 or img.width > 770:
+        #     new_size = (340,770)
+        #     img.thumbnail(new_size)
+        #     img.save(self.image.path)
 
 
 

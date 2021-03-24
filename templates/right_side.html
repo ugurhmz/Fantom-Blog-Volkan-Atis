@@ -71,7 +71,7 @@
                         {% for category in categories %}
 
                         <li>
-                            <a href="#" class="d-flex justify-content-between">
+                            <a href="{% url 'category_detail' pk=category.id slug=category.slug %}" class="d-flex justify-content-between">
                                 <p>{{ category.title }}</p>
                                 <p>{{ category.post_count }}</p>
                             </a>
