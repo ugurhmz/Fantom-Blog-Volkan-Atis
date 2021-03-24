@@ -1,5 +1,5 @@
 from django.contrib import admin
-from posts.models import Post, Category
+from posts.models import Post, Category,Tag
 
 
 @admin.register(Post)
@@ -17,3 +17,4 @@ class AdminPost(admin.ModelAdmin):
 
 
 admin.site.register(Category)
+admin.site.register(Tag)

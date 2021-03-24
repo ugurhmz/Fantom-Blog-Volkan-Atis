@@ -24,6 +24,19 @@ class Category(models.Model):
 
 
 
+class Tag(models.Model):
+    title = models.CharField(max_length = 50)
+    slug = models.SlugField(editable = False )
+
+    def __str__(self):
+        return self.title
+
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.title)
+        super(Tag,self).save(*args, **kwargs)
+
+
+
 
 class Post(models.Model):
     title = models.CharField(max_length=150)
@@ -33,8 +46,7 @@ class Post(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, default=1)#ForeignKey -> 1'e çok yani, 1 kullanıcı bir sürü yazı ekleyebilir ilişkisi
     slug = models.SlugField(default="slug", editable=False)
     category = models.ForeignKey(Category,on_delete=models.CASCADE, default=1, related_name="posts")#1 Category'nin ->BİR SÜRÜ POSTU OLABİLİR , category -> one, Post Many
-
-
+    tag = models.ManyToManyField(Tag,related_name="posts", blank=True)
 
 
 
