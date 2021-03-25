@@ -9,7 +9,7 @@
             	<div class="overlay bg-parallax" data-stellar-ratio="0.9" data-stellar-vertical-offset="0" data-background=""></div>
 				<div class="container">
 					<div class="banner_content text-center">
-						<h2>REGISTER FORM </h2>
+						<h2>Giriş Yap</h2>
 						<div class="page_link">
 							<a href="{% url 'index' %}">Home</a>
 
@@ -25,7 +25,10 @@
             <div class="container">
                 <div class="row">
                     <div class="col-lg-8">
-                        <h2 class="text-center text-info mb-3">REGISTER</h2>
+
+                    {% if not user.is_authenticated %}
+
+                        <h2 class="text-center text-info mb-3">Giriş Yap</h2>
 
                         <form method="POST">
                             {% csrf_token %}
@@ -58,26 +61,22 @@
                                                    required="" class="single-input">
                                         </div>
 
-                                        <div class="mt-10">
-                                            <input type="text" name="email" placeholder="Email" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Email'" required="" class="single-input">
-                                        </div>
+
                                          <div class="mt-10">
-                                            <input type="password" name="password1" placeholder="Şifre" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Şifre'" required="" class="single-input">
+                                            <input type="password" name="password" placeholder="Şifre" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Şifre'" required="" class="single-input">
                                         </div>
 
-                                        <div class="mt-10">
-                                            <input type="password" name="password2" placeholder="Şifre Tekrar" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Şifre Tekrar'" required="" class="single-input">
-                                        </div>
-
-
-                                    <button type="submit" class="genric-btn success circle mt-4" style="float:right;">
-                                        <span style="font-size: 1rem;">Kayıt ol</span>
+                                    <button type="submit" class="genric-btn primary circle mt-4" style="float:right;">
+                                        <span style="font-size: 1rem;font-weight: bolder">Giriş Yap</span>
                                     </button>
 
                             </div>
 
                        </form>
+                        {% else %}
+                        <h2>Zaten Giriş yaptınız</h2>
 
+                        {% endif %}
                     </div>
 
                     {% include 'right_side.html' %}
