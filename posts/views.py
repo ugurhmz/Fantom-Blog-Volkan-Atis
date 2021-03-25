@@ -1,6 +1,15 @@
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404
-from django.views.generic import ListView, TemplateView, DetailView
+from django.template.defaultfilters import slugify
+from django.urls import reverse
+from django.utils.decorators import method_decorator
+from django.views.generic import ListView, DetailView, FormView, CreateView
+
+from .forms import PostCreationForm
 from .models import Post, Category, Tag
+
+
+
 
 #__________________________________ IndexView(ListView)__________________________
 
@@ -54,7 +63,7 @@ class CategoryDetail(ListView):
 
         return context
 
-
+#__________________________________ TagDetail(ListView)__________________________
 
 class TagDetail(ListView):
     model = Post
@@ -76,11 +85,40 @@ class TagDetail(ListView):
         return context
 
 
+#__________________________________ CreatePostView(FormView)__________________________
+
+
+@method_decorator(login_required(login_url='/users/login'), name="dispatch") #Kullanıcının giriş yapması gerekirkir, ekleyebilsin içerik.
+class CreatePostView(CreateView):
+        template_name = 'posts/create-post.html'
+        form_class = PostCreationForm
+        model = Post
 
 
 
+        def get_success_url(self):
+            return reverse('detail',kwargs={"pk":self.object.pk, "slug":self.object.slug})
 
 
+        def form_valid(self, form):
+            form.instance.user = self.request.user
+            form.save()
+            tags = self.request.POST.get("tag").split(",") #html'de name="tag" olan
+
+            for tag in tags:
+                current_tag = Tag.objects.filter(slug=slugify(tag)) #geçerli olan etiketim
+
+
+                if current_tag.count() < 1: # 1 den küçükse, demekki daha önce yok.hemen olştur.
+                    create_tag = Tag.objects.create(title=tag)
+                    form.instance.tag.add(create_tag)
+
+                else:
+                    exist_tag = Tag.objects.get(slug=slugify(tag))
+                    form.instance.tag.add(exist_tag)
+
+
+            return super(CreatePostView,self).form_valid(form)
 
 
 
