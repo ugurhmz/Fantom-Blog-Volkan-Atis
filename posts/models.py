@@ -3,7 +3,7 @@ from django.conf import settings
 from django.db import models
 from django.template.defaultfilters import slugify
 
-
+#_______________________________ Cetagory() ___________________________________________________
 class Category(models.Model):
     title = models.CharField(max_length=250)
     slug = models.SlugField(editable=False)
@@ -24,6 +24,7 @@ class Category(models.Model):
 
 
 
+#_______________________________ Tag() ___________________________________________________
 class Tag(models.Model):
     title = models.CharField(max_length = 50)
     slug = models.SlugField(editable = False )
@@ -36,7 +37,12 @@ class Tag(models.Model):
         super(Tag,self).save(*args, **kwargs)
 
 
+    def post_count(self):
+        return self.posts.all().count() #posts -> related_name='posts' olan...
 
+
+
+#_______________________________ Post() ___________________________________________________
 
 class Post(models.Model):
     title = models.CharField(max_length=150)
@@ -47,6 +53,8 @@ class Post(models.Model):
     slug = models.SlugField(default="slug", editable=False)
     category = models.ForeignKey(Category,on_delete=models.CASCADE, default=1, related_name="posts")#1 Category'nin ->BİR SÜRÜ POSTU OLABİLİR , category -> one, Post Many
     tag = models.ManyToManyField(Tag,related_name="posts", blank=True)
+    slider_post = models.BooleanField(default=False)
+
 
 
 
@@ -75,10 +83,10 @@ class Post(models.Model):
 
 
 
-"""
+    """
    1 user -> Bir sürü yazısı olabilir, fakat 1 yazının(Aynı yazı) bir sürü useri olamaz :ForeignKey
     1 etiket bir çok posta ait olabilir, aynı zamanda o yazıda bir çok etikete sahip olabilir:ManyToMany
-"""
+    """
 
 
 """

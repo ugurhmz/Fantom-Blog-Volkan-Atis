@@ -88,7 +88,7 @@
                         {% tags as etiketler %}
                         {% for etiket in etiketler %}
 
-                        <li><a href="#">{{ etiket }}</a></li>
+                        <li><a href="{% url 'tag_detail' etiket.slug %}">{{ etiket }}</a></li>
 
                         {% endfor %}
                     </ul>
