@@ -25,9 +25,34 @@
             <div class="container">
                 <div class="row">
                     <div class="col-lg-8">
-                        <h2 class="text-center text-danger mb-3">REGISTER</h2>
+                        <h2 class="text-center text-info mb-3">REGISTER</h2>
 
-                        <form method="POST"> {% csrf_token %}
+                        <form method="POST">
+                            {% csrf_token %}
+
+                            {% if form.errors %}
+                                <div id="errors">
+                                    <div class="inner">
+                                        <p class="text-danger">
+                                            Lütfen aşağıdaki hataları kontrol
+                                            edin.</p>
+                                        <ul>
+                                            {% for field in form %}
+                                                  {% if field.errors %}
+                                                      <li>{{ field.label }}: {{ field.errors|striptags }}</li>
+
+                                                  {% endif %}
+                                            {% endfor %}
+                                        </ul>
+
+
+
+
+                                    </div>
+
+                                </div>
+                            {% endif %}
+
                             <div class="blog_left_sidebar">
                                         <div class="mt-10">
                                             <input type="text" name="username" placeholder="Username"
