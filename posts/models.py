@@ -67,6 +67,14 @@ class Post(models.Model):
         self.slug = slugify(self.title)
         super(Post,self).save(*args,**kwargs)
 
+
+    def post_tag(self):
+        return ",".join(str(tag) for  tag in self.tag.all())
+
+
+
+
+
         #gelen resimleri boyutlandırma Pillow (KALDIRILDI -RGB Den dolayı bozuyor..)
         # img = Image.open(self.image.path)
         #

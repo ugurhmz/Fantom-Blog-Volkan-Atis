@@ -28,6 +28,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'posts',
+    'users',
+
+    #thirdparty
+    'crispy_forms',
 ]
 
 MIDDLEWARE = [
@@ -124,3 +128,4 @@ LOGIN_REDIRECT_URL ='/'
 
 
 
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
