@@ -1,4 +1,5 @@
 from django.contrib.auth.decorators import login_required
+from django.db.models import F
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 from django.template.defaultfilters import slugify
@@ -34,11 +35,22 @@ class PostDetail(DetailView):
     model = Post
     context_object_name = 'single'
 
+    def get(self, request, *args, **kwargs):
+        self.hit = Post.objects.filter(id=self.kwargs['pk']).update(hit=F('hit')+1)
+        return super(PostDetail, self).get(request, *args, **kwargs)
+
+
+
 
     def get_context_data(self, **kwargs):
         context= super(PostDetail, self).get_context_data(**kwargs)
 
         return context
+
+
+
+
+
 
 
 

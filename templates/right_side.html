@@ -29,34 +29,20 @@
                 </aside>
                 <aside class="single_sidebar_widget popular_post_widget">
                     <h3 class="widget_title">Popular Posts</h3>
-                    <div class="media post_item">
-                        <img src="{% static "img/blog/popular-post/post1.jpg" %}" alt="post">
+
+                    {% hit_posts as posts %} <!-- hit_posts  kelimesini posts olarak kullan.-->
+
+                    {% for post in posts %}
+                        <div class="media post_item">
+                        <img src="{{ post.image.url }}" alt="post" style="width:100px;height:60px;">
                         <div class="media-body">
-                            <a href="blog-details.html"><h3>Space The Final Frontier</h3></a>
-                            <p>02 Hours ago</p>
+                            <a href="{% url 'detail'  post.id post.slug %}"><h3>{{ post.title }}</h3></a>
+                            <p>hit: {{ post.hit }}</p>
                         </div>
                     </div>
-                    <div class="media post_item">
-                        <img src="{% static "img/blog/popular-post/post2.jpg" %}" alt="post">
-                        <div class="media-body">
-                            <a href="blog-details.html"><h3>The Amazing Hubble</h3></a>
-                            <p>02 Hours ago</p>
-                        </div>
-                    </div>
-                    <div class="media post_item">
-                        <img src="{% static "img/blog/popular-post/post3.jpg" %}" alt="post">
-                        <div class="media-body">
-                            <a href="blog-details.html"><h3>Astronomy Or Astrology</h3></a>
-                            <p>03 Hours ago</p>
-                        </div>
-                    </div>
-                    <div class="media post_item">
-                        <img src="{% static "img/blog/popular-post/post4.jpg" %}" alt="post">
-                        <div class="media-body">
-                            <a href="blog-details.html"><h3>Asteroids telescope</h3></a>
-                            <p>01 Hours ago</p>
-                        </div>
-                    </div>
+
+                    {% endfor %}
+
                     <div class="br"></div>
                 </aside>
                 <aside class="single_sidebar_widget">

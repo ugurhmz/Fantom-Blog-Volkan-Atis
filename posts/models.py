@@ -55,6 +55,8 @@ class Post(models.Model):
     tag = models.ManyToManyField(Tag,related_name="posts", blank=True)
     slider_post = models.BooleanField(default=False)
 
+    hit=models.PositiveIntegerField(default=0)
+
 
 
 
