@@ -50,10 +50,6 @@ class PostDetail(DetailView):
 
 
 
-
-
-
-
 #__________________________________ CategoryDetail(ListView)__________________________
 
 class CategoryDetail(ListView):

@@ -49,7 +49,11 @@
                             	</div>
                             	<div class="blog_text">
 									<div class="blog_text_inner">
-										<a class="cat" href="#">Gadgets</a>
+                                        {% for tag in post.tag.all %}
+										<a class="cat" href="{% url 'tag_detail' tag.slug %}">{{ tag.title }}</a>
+                                        {% endfor %}
+
+
 										<a href="{% url 'detail' pk=post.id slug=post.slug %}"><h4>{{ post.title }}</h4></a>
 										<p>{{ post.content | safe | truncatechars_html:250 }}</p>
 										<div class="date">

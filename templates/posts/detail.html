@@ -31,8 +31,9 @@
        						<a href="#"><h4>{{ single.title }}</h4></a>
        						<div class="user_details">
        							<div class="float-left">
-       								<a href="#">Lifestyle</a>
-       								<a href="#">Gadget</a>
+                                    {% for tag in single.tag.all %}
+       								<a href="{% url 'tag_detail' slug=tag.slug %}">{{ tag.title }}</a>
+                                    {% endfor %}
        							</div>
        							<div class="float-right">
        								<div class="media">
