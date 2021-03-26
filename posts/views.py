@@ -19,12 +19,23 @@ class IndexView(ListView):
     template_name = 'posts/index.html' #templates->posts->index.html
     model = Post
     context_object_name = 'posts'  #key ->value gibi düşünebilirsin.
+    paginate_by = 3
+
+
+
+
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super(IndexView,self).get_context_data(**kwargs)
         context['slider_posts'] = Post.objects.all().filter(slider_post=True)
 
         return context
+
+
+
+
+
+
 
 
 
@@ -48,12 +59,6 @@ class PostDetail(DetailView):
         context['next'] =Post.objects.filter(id__gt=self.kwargs['pk']).order_by('pk').first()
 
         return context
-
-
-
-
-
-
 
 
 #__________________________________ CategoryDetail(ListView)__________________________
