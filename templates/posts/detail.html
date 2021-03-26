@@ -48,7 +48,12 @@
        						</div>
 
 							<p>{{ single.content }}</p>
-      						<div class="news_d_footer">
+                            {% if single.user == request.user %}
+                            <a href="{% url 'post_update' single.pk single.slug %}" class="genric-btn info circle">Güncelle</a>
+                            <a href="{% url 'delete_post' single.pk single.slug %}" class="genric-btn danger circle">Sil</a>
+      						{% endif %}
+
+                            <div class="news_d_footer">
       							<a href="#"><i class="lnr lnr lnr-heart"></i>Lily and 4 people like this</a>
       							<a class="justify-content-center ml-auto" href="#"><i class="lnr lnr lnr-bubble"></i>06 Comments</a>
       							<div class="news_socail ml-auto">

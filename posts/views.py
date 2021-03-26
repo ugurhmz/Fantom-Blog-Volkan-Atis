@@ -4,7 +4,7 @@ from django.shortcuts import render, get_object_or_404
 from django.template.defaultfilters import slugify
 from django.urls import reverse
 from django.utils.decorators import method_decorator
-from django.views.generic import ListView, DetailView, FormView, CreateView, UpdateView
+from django.views.generic import ListView, DetailView, FormView, CreateView, UpdateView, DeleteView
 
 from .forms import *
 from .models import Post, Category, Tag
@@ -170,10 +170,32 @@ class UpdatePostView(UpdateView):
 
 
 
+#__________________________________ DeletePostView(DeleteView)__________________________
+
+@method_decorator(login_required(login_url='/users/login'), name="dispatch")
+class DeletePostView(DeleteView):
+        model = Post
+        success_url  ='/'
+        template_name="posts/delete-post.html"
+
+
+        def delete(self, request, *args, **kwargs):
+            self.object = self.get_object()
+            if self.object.user == request.user:
+                self.object.delete()
+                return HttpResponseRedirect(self.success_url)
+
+            else:
+                return HttpResponseRedirect(self.success_url)
 
 
 
 
+        def get(self, request ,*args, **kwargs):
+            self.object = self.get_object()
 
-
+            if self.object.user != request.user:
+                return HttpResponseRedirect('/')
+            
+            return super(DeletePostView, self).get(request ,*args, **kwargs)
 
