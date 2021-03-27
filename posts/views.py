@@ -1,5 +1,5 @@
 from django.contrib.auth.decorators import login_required
-from django.db.models import F
+from django.db.models import F, Q
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 from django.template.defaultfilters import slugify
@@ -9,8 +9,6 @@ from django.views.generic import ListView, DetailView, FormView, CreateView, Upd
 
 from .forms import *
 from .models import Post, Category, Tag
-
-
 
 
 #__________________________________ IndexView(ListView)__________________________
@@ -30,12 +28,6 @@ class IndexView(ListView):
         context['slider_posts'] = Post.objects.all().filter(slider_post=True)
 
         return context
-
-
-
-
-
-
 
 
 
@@ -220,4 +212,36 @@ class DeletePostView(DeleteView):
                 return HttpResponseRedirect('/')
             
             return super(DeletePostView, self).get(request ,*args, **kwargs)
+
+#__________________________________ SearchView(ListView)__________________________
+
+class SearchView(ListView):
+    model = Post
+    template_name = 'posts/search.html'
+    paginate_by = 5
+    context_object_name='posts'
+
+
+
+    def get_queryset(self):
+        query = self.request.GET.get('q')
+
+        if query:
+            return Post.objects.filter(
+                Q(title__icontains=query) |
+                Q(content__icontains=query) |
+                Q(tag__title__icontains=query)
+
+                    ).order_by('-id').distinct()
+
+        return Post.objects.all().order_by('-id')
+
+
+
+
+
+
+
+
+
 
