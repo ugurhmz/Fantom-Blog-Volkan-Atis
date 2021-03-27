@@ -32,6 +32,7 @@ INSTALLED_APPS = [
 
     #thirdparty
     'crispy_forms',
+    'captcha',
 ]
 
 MIDDLEWARE = [
@@ -126,6 +127,7 @@ LOGOUT_REDIRECT_URL='/'
 LOGIN_REDIRECT_URL ='/'
 
 
-
-
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+RECAPTCHA_PUBLIC_KEY = '6LcIypAaAAAAAAgJlQ11FhFbiAVhNbpdOXxjdwJi'
+RECAPTCHA_PRIVATE_KEY = '6LcIypAaAAAAADEUCpi5ahiHFr2_8wQ3OAuM6Rom'

@@ -60,10 +60,14 @@ class PostDetail(DetailView,FormMixin):
 
 
     def form_valid(self,form):
-        form.instance.post = self.object
-        form.save()
+        if form.is_valid():
+            form.instance.post = self.object
+            form.save()
 
-        return super(PostDetail, self).form_valid(form)
+            return super(PostDetail, self).form_valid(form)
+
+        else:
+            super(PostDetail, self).form_invalid(form)
 
 
 
@@ -75,7 +79,7 @@ class PostDetail(DetailView,FormMixin):
             return self.form_valid(form)
 
         else:
-            return self.form_valid(form)
+            return self.form_invalid(form)
 
 
     def get_success_url(self):

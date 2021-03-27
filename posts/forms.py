@@ -1,6 +1,6 @@
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Field, Submit
-
+from captcha.fields import ReCaptchaField
 from .models import *
 from django import forms
 
@@ -64,6 +64,8 @@ class PostUpdateForm(forms.ModelForm): #Crispy için form oluşturma
 
 class CreateCommentForm(forms.ModelForm):
 
+    captcha = ReCaptchaField()
+
     def __init__(self,*args,**kwargs):
         super(CreateCommentForm, self).__init__(*args,**kwargs)
         self.helper = FormHelper()
@@ -73,7 +75,7 @@ class CreateCommentForm(forms.ModelForm):
             Field("name",css_class="form-control"),
             Field("email",css_class="form-control"),
             Field("content",css_class="form-control mb-10"),
-
+            Field("captcha")
         )
 
 
