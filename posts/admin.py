@@ -1,5 +1,5 @@
 from django.contrib import admin
-from posts.models import Post, Category,Tag
+from posts.models import Post, Category,Tag, Comment
 
 
 @admin.register(Post)
@@ -13,6 +13,17 @@ class AdminPost(admin.ModelAdmin):
     class Meta:
         model =Post
 
+
+@admin.register(Comment)
+class AdminComment(admin.ModelAdmin):
+    list_filter = ('publishing_date',)
+    search_fields=('name','email','content','post__title')
+    list_display=('name','email','publishing_date','post')
+    list_display_links =('name','email','publishing_date','post')
+
+
+    class Meta:
+        model = Comment
 
 
 

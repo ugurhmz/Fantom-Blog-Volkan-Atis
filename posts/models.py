@@ -74,6 +74,29 @@ class Post(models.Model):
         return ",".join(str(tag) for  tag in self.tag.all())
 
 
+    def comment_count(self):
+        return self.comments.all().count()
+
+
+
+
+
+# _______________________________ Comment(models.Model) ___________________________________________________
+class Comment(models.Model):
+    post = models.ForeignKey(Post,on_delete=models.CASCADE, related_name='comments') # 1 post, Çokça YORUM
+    name = models.CharField(max_length=100)
+    email = models.EmailField(max_length=100)
+    content = models.TextField()
+    publishing_date = models.DateField(auto_now_add=True)
+
+
+    def __str__(self):
+        return self.post.title #Hangi Yazıya yorum yapılmış,admin panelinde göster.
+
+
+
+
+
 
 
 

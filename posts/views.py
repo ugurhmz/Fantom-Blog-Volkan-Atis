@@ -6,6 +6,7 @@ from django.template.defaultfilters import slugify
 from django.urls import reverse
 from django.utils.decorators import method_decorator
 from django.views.generic import ListView, DetailView, FormView, CreateView, UpdateView, DeleteView
+from django.views.generic.edit import FormMixin
 
 from .forms import *
 from .models import Post, Category, Tag
@@ -33,10 +34,13 @@ class IndexView(ListView):
 
 #__________________________________ PostDetail(DetailView)__________________________
 
-class PostDetail(DetailView):
+class PostDetail(DetailView,FormMixin):
     template_name='posts/detail.html'
     model = Post
     context_object_name = 'single'
+    form_class = CreateCommentForm
+
+
 
 
     def get(self, request, *args, **kwargs):
@@ -50,8 +54,37 @@ class PostDetail(DetailView):
         context= super(PostDetail, self).get_context_data(**kwargs)
         context['previous'] = Post.objects.filter(id__lt=self.kwargs['pk']).order_by('-pk').first()#lt ->less then
         context['next'] =Post.objects.filter(id__gt=self.kwargs['pk']).order_by('pk').first()
+        context['form'] = self.get_form()
 
         return context
+
+
+    def form_valid(self,form):
+        form.instance.post = self.object
+        form.save()
+
+        return super(PostDetail, self).form_valid(form)
+
+
+
+    def post(self, *args, **kwargs):
+        self.object = self.get_object()
+        form = self.get_form()
+
+        if form.is_valid():
+            return self.form_valid(form)
+
+        else:
+            return self.form_valid(form)
+
+
+    def get_success_url(self):
+        return reverse('detail',kwargs={"pk":self.object.pk,"slug":self.object.slug})
+
+
+
+
+
 
 
 #__________________________________ CategoryDetail(ListView)__________________________

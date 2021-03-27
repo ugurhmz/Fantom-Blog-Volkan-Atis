@@ -62,21 +62,31 @@ class PostUpdateForm(forms.ModelForm): #Crispy için form oluşturma
 
 
 
-# class CreateCommentForm(forms.ModelForm):
-#
-#     def __init__(self,*args,**kwargs):
-#         super(CreateCommentForm, self).__init__(*args,**kwargs)
-#         self.helper = FormHelper()
-#         self.helper.form_method = "post"
-#         self.helper.layout =  Layout(
-#
-#
-#         )
-#
-#
-#
+class CreateCommentForm(forms.ModelForm):
+
+    def __init__(self,*args,**kwargs):
+        super(CreateCommentForm, self).__init__(*args,**kwargs)
+        self.helper = FormHelper()
+        self.helper.form_method = "post"
+        self.helper.layout =  Layout(
+
+            Field("name",css_class="form-control"),
+            Field("email",css_class="form-control"),
+            Field("content",css_class="form-control mb-10"),
+
+        )
 
 
+        self.helper.add_input(Submit('submit','Yorum Ekle',css_class="primary-btn submit_btn"))
+
+
+    class Meta:
+        model = Comment
+        fields = [
+            'name',
+            'email',
+            'content',
+        ]
 
 
 
