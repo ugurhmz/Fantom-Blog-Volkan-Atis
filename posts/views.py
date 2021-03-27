@@ -46,6 +46,7 @@ class PostDetail(DetailView):
     model = Post
     context_object_name = 'single'
 
+
     def get(self, request, *args, **kwargs):
         self.hit = Post.objects.filter(id=self.kwargs['pk']).update(hit=F('hit')+1)
         return super(PostDetail, self).get(request, *args, **kwargs)
@@ -67,6 +68,7 @@ class CategoryDetail(ListView):
     model = Post # Postları listeyeceğiz
     template_name = 'categories/category_detail.html'
     context_object_name = 'posts'
+    paginate_by = 5
 
 
     def get_queryset(self):
@@ -89,6 +91,7 @@ class TagDetail(ListView):
     model = Post
     template_name='tags/tag_detail.html'
     context_object_name='posts'
+    paginate_by = 5
 
 
     def get_queryset(self):
