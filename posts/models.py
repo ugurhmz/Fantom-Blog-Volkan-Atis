@@ -77,7 +77,8 @@ class Post(models.Model):
     def comment_count(self):
         return self.comments.all().count()
 
-
+    class Meta:
+        ordering = ['-id']
 
 
 

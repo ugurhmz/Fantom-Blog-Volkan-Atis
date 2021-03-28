@@ -6,10 +6,10 @@ from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.utils.decorators import method_decorator
 
-
+from posts.models import Post
 from .forms import RegisterForm,UserProfileForm
 # Create your views here.
-from django.views.generic import CreateView, UpdateView
+from django.views.generic import CreateView, UpdateView, ListView
 from .models import UserProfile
 
 
@@ -48,6 +48,22 @@ class UserProfileUpdateView(UpdateView):
         return super(UserProfileUpdateView, self).get(request, *args, **kwargs)
 
 
+@method_decorator(login_required(login_url='users/login'), name='dispatch')
+class  UserProfileView(ListView):
+    template_name = 'users/my-profile.html'
+    model = Post
+    context_object_name ='userposts'
+    paginate_by = 5
 
 
+    #ekstra context'imiz, userı çekeceğimiz
+    def get_context_data(self,**kwargs):
+        context = super(UserProfileView, self).get_context_data(**kwargs)
+        context['userprofile'] = UserProfile.objects.get(user=self.request.user)#giriş yapmış kullanıcının profilini getir bana.
+        return context
+
+
+    # O KULLANICIYA AİT POSTLARI ÇEKMEK İÇİN :
+    def get_queryset(self):
+        return Post.objects.filter(user=self.request.user).order_by('-id')
 

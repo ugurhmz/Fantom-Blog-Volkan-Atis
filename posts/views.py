@@ -22,13 +22,12 @@ class IndexView(ListView):
 
 
 
-
-
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super(IndexView,self).get_context_data(**kwargs)
         context['slider_posts'] = Post.objects.all().filter(slider_post=True)
 
         return context
+
 
 
 
