@@ -45,6 +45,7 @@
 							<ul class="nav navbar-nav menu_nav">
 								<li class="nav-item active"><a class="nav-link" href="{% url 'index' %}">Home</a></li>
 								<li class="nav-item"><a class="nav-link" href="category.html">Category</a></li>
+								<li class="nav-item"><a class="nav-link" href="{% url 'users:user_list' %}">Users</a></li>
 
                                 {% if user.is_authenticated %}
 								<li class="nav-item submenu dropdown">

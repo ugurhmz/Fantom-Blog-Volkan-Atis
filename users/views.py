@@ -69,7 +69,7 @@ class  UserProfileView(ListView):
 
 
 
-
+#_____________________________ UserPostView(ListView)__________________________________________
 class UserPostView(ListView):
 
     template_name ='users/users-posts.html'
@@ -81,3 +81,33 @@ class UserPostView(ListView):
     #Aşağıda ise kullanıcıya ait postları çekme:
     def get_queryset(self):
         return Post.objects.filter(user = self.kwargs['pk']) #Gelen kullanıcının id'sini tarayıcıya koyup, o id ye göre
+
+
+#_____________________________ UserListView(ListView)__________________________________________
+class UserListView(ListView):
+    template_name ='users/user-list.html'
+    model = UserProfile
+    context_object_name = 'users' # html templatesinde -> users olarak kullanacaz..
+    paginate_by = 5
+
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context= super(UserListView, self).get_context_data(**kwargs)
+        return context
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
