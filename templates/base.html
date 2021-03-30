@@ -1,6 +1,7 @@
 {% load static%}
-<!doctype html>
+{% load custom_tags %}
 
+<!doctype html>
 <html lang="en">
     <head>
         <!-- Required meta tags -->
@@ -44,7 +45,27 @@
 						<div class="collapse navbar-collapse offset" id="navbarSupportedContent">
 							<ul class="nav navbar-nav menu_nav">
 								<li class="nav-item active"><a class="nav-link" href="{% url 'index' %}">Home</a></li>
-								<li class="nav-item"><a class="nav-link" href="category.html">Category</a></li>
+
+                                <li class="nav-item submenu dropdown">
+                                    <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Categories</a>
+                                        <ul class="dropdown-menu">
+
+                                        {% categories as categories %}
+                                        {% for category in categories %}
+
+                                            <li class="nav-item">
+                                                <a class="nav-link" href="{% url 'category_detail' pk=category.id slug=category.slug %}">
+                                                    {{ category.title }}
+                                                </a>
+                                            </li>
+
+                                        {% endfor %}
+
+                                        </ul>
+                                </li>
+
+
+
 								<li class="nav-item"><a class="nav-link" href="{% url 'users:user_list' %}">Users</a></li>
 
                                 {% if user.is_authenticated %}
