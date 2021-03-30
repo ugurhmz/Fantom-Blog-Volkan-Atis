@@ -51,6 +51,8 @@ class UserProfileUpdateView(SuccessMessageMixin,UpdateView):
         return super(UserProfileUpdateView, self).get(request, *args, **kwargs)
 
 
+
+
 @method_decorator(login_required(login_url='users/login'), name='dispatch')
 class  UserProfileView(ListView):
     template_name = 'users/my-profile.html'

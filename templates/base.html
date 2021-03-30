@@ -93,8 +93,27 @@
 
                             </ul>
 							<ul class="nav navbar-nav navbar-right ml-auto">
-								<li class="nav-item"><a href="#" class="search"><i class="lnr lnr-magnifier"></i></a></li>
+                                 <aside class="single_sidebar_widget search_widget">
+                                    <form action="{% url 'search' %}" method="get">
+                                    <div class="input-group ">
+
+                                        <input type="text" class="form-control border-danger" placeholder="Blogda ara..." name="q">
+                                    <span class="input-group-btn">
+                                        <button class="btn btn-dark" type="submit">
+                                           <i class="lnr lnr-magnifier"></i>
+
+                                        </button>
+                                    </span>
+
+
+
+
+                                    </div> </form><!-- /input-group -->
+
+                                </aside>
+
 							</ul>
+
 						</div>
 					</div>
 				</nav>
