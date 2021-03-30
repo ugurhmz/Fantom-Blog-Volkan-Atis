@@ -67,3 +67,17 @@ class  UserProfileView(ListView):
     def get_queryset(self):
         return Post.objects.filter(user=self.request.user).order_by('-id')
 
+
+
+
+class UserPostView(ListView):
+
+    template_name ='users/users-posts.html'
+    model = Post
+    context_object_name = 'posts'
+    paginate_by = 5
+    #Yukarısı komple bütün postları çeker
+
+    #Aşağıda ise kullanıcıya ait postları çekme:
+    def get_queryset(self):
+        return Post.objects.filter(user = self.kwargs['pk']) #Gelen kullanıcının id'sini tarayıcıya koyup, o id ye göre
